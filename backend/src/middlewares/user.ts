@@ -106,4 +106,5 @@ export default {
     authenticate,
     validateUserRole,
     validateUpdateUser,
+    validateSignedRole,
 };

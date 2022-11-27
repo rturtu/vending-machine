@@ -9,7 +9,7 @@ export const jwtAuthentication = (
     res: Response,
     next: NextFunction
 ) => {
-    console.log(req.headers);
+    console.log("middlewares.session.jwtAuthentication");
     if (!req.headers.authorization) return next("Missing token header");
     Session.findOne({
         where: {
