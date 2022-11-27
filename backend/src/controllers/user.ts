@@ -36,11 +36,21 @@ export const add = (req: Request, res: Response) => {
     User.create({
         email: req.body.email,
         password: req.body.password,
+        role: req.body.role,
     })
         .then((user: IUser) => {
-            res.json(user);
+            res.json({
+                email: req.body.email,
+                role: req.body.role,
+            });
         })
         .catch((err: any) => {
             res.json(err);
         });
+};
+
+export default {
+    logIn,
+    add,
+    readAll,
 };

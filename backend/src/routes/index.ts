@@ -1,5 +1,7 @@
 import { Router } from "express";
-import { add, readAll, logIn } from "../controllers/user";
+import { readAll, logIn } from "../controllers/user";
+import userRoutes from "./user";
+import sessionRoutes from "./session";
 
 export default class MainRouter {
     router: Router;
@@ -11,7 +13,9 @@ export default class MainRouter {
             res.status(200).send("Hello world!");
         });
 
-        this.router.post("/user", add);
+        userRoutes(this.router);
+        sessionRoutes(this.router);
+
         this.router.get("/users", readAll);
         this.router.post("/login", logIn);
     }
