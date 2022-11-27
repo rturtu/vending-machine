@@ -16,6 +16,12 @@ const sessionRoutes = (router: Router) => {
         sessionMiddleware.jwtAuthentication,
         sessionController.deleteSession
     );
+
+    router.delete(
+        "/all-tokens",
+        sessionMiddleware.jwtAuthentication,
+        sessionController.deleteAllSessions
+    );
 };
 
 export default sessionRoutes;

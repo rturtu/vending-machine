@@ -39,7 +39,25 @@ export const deleteSession = (
         .catch((err: any) => next(err));
 };
 
+export const deleteAllSessions = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.session) return next("Session is not set in request");
+    Session.destroy({
+        where: {
+            UserId: req.session.UserId,
+        },
+    })
+        .then(() => {
+            res.status(200).json("Signed out from every session successfully");
+        })
+        .catch((err: any) => next(err));
+};
+
 export default {
     generateJWT,
     deleteSession,
+    deleteAllSessions,
 };

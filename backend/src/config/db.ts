@@ -35,7 +35,9 @@ export default class Database {
             });
 
         this.database.sync({
-            // force: true
+            // force: true,
         });
     }
 }
+
+export const databaseInstance = new Database().database;
