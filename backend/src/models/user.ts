@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import { UserRoles } from "../types/user-roles";
 
 const SALT_ROUNDS = 10;
-const salt = bcrypt.genSaltSync(SALT_ROUNDS);
+export const salt = bcrypt.genSaltSync(SALT_ROUNDS);
 
 export interface IUser {
     id: number;

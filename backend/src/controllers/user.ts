@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
-import { User, IUser, validatePassword } from "../models/user";
+import { User, IUser, validatePassword, salt } from "../models/user";
+import bcrypt from "bcrypt";
 
 export const readAll = (req: Request, res: Response) => {
     User.findAll()
@@ -49,8 +50,41 @@ export const add = (req: Request, res: Response) => {
         });
 };
 
+export const update = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) return next("User is not set in request");
+    const cryptedPassword = bcrypt.hashSync(req.body.password, salt);
+    User.update(
+        { password: cryptedPassword },
+        {
+            fields: ["password"],
+            where: {
+                id: req.user.id,
+            },
+        }
+    )
+        .then(() => {
+            res.status(200).send({});
+        })
+        .catch((err: any) => next(err));
+};
+
+export const deleteUser = (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) return next("User is not set in request");
+    User.destroy({
+        where: {
+            id: req.user.id,
+        },
+    })
+        .then(() => {
+            res.status(200).send("User deleted successfully");
+        })
+        .catch((err: any) => next(err));
+};
+
 export default {
     logIn,
     add,
     readAll,
+    update,
+    deleteUser,
 };

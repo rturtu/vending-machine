@@ -45,7 +45,7 @@ const Session: sequelize.Model<ISession, {}> = databaseInstance.define<
     }
 );
 
-Session.belongsTo(User);
+Session.belongsTo(User, { onDelete: "cascade" });
 User.hasMany(Session);
 
 export { Session };

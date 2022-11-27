@@ -14,12 +14,39 @@ export const validateCreateNewUser = (
 ) => {
     if (!req.body.email) return next("Please provide an email");
     if (!req.body.password) return next("Please provide a password");
-    if (!req.body.role) return next("Please provide a role");
     if (!validateEmail(req.body.email))
         return next("Please provide a valid email");
-    if (![UserRoles.Seller, UserRoles.Buyer].includes(req.body.role))
-        return next("Please provide a valid role");
     next();
+};
+
+export const validateUpdateUser = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.body.password) return next("Please provide a password");
+    if (!req.user) return next("User is not set in request");
+    if (validateCryptedPassword(req.body.password, req.user?.password))
+        return next("The new password can not be the same as the last one");
+    return next();
+};
+
+export const validateUserRole = (...args: UserRoles[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.body.role) return next("Please provide a role");
+        if (!args.includes(req.body.role))
+            return next("Please provide a valid role");
+        return next();
+    };
+};
+
+export const validateSignedRole = (...args: UserRoles[]) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (!req.user) return next("User is not set in request");
+        if (!args.includes(req.user.role))
+            return next("User does not have a valid role");
+        return next();
+    };
 };
 
 export const emailDoesntExist = (
@@ -77,4 +104,6 @@ export default {
     emailDoesntExist,
     validatePassword,
     authenticate,
+    validateUserRole,
+    validateUpdateUser,
 };
