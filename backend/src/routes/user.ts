@@ -2,7 +2,7 @@ import { Router } from "express";
 import userController from "../controllers/user";
 import userMiddleware from "../middlewares/user";
 import sessionMiddleware from "../middlewares/session";
-import { UserRoles } from "../types/user-roles";
+import { UserRoles } from "../types/enums";
 
 const userRoutes = (router: Router) => {
     router.post(

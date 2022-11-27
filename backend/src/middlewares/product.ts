@@ -41,6 +41,26 @@ export const existByIdParam = (
         .catch((err: any) => next(err));
 };
 
+export const existByProductIdBody = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    console.log("middlewares.product.existByProductIdBody");
+    if (!req.body.productId) return next("Please provide a product id");
+    Product.findOne({
+        where: {
+            id: req.body.productId,
+        },
+    })
+        .then((product: IProduct | null) => {
+            if (product == null) return next("Product does not exist");
+            req.product = product;
+            return next();
+        })
+        .catch((err: any) => next(err));
+};
+
 export const userOwnsProduct = (
     req: Request,
     res: Response,
@@ -95,4 +115,5 @@ export default {
     existByIdParam,
     userOwnsProduct,
     validateSearch,
+    existByProductIdBody,
 };

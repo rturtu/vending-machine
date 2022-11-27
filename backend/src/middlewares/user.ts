@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { validateEmail } from "../utils/validation";
-import { UserRoles } from "../types/user-roles";
+import { UserRoles } from "../types/enums";
 import {
     User,
     IUser,

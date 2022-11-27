@@ -1,7 +1,7 @@
 import { databaseInstance } from "../config/db";
 import sequelize from "sequelize";
 import bcrypt from "bcrypt";
-import { UserRoles } from "../types/user-roles";
+import { UserRoles } from "../types/enums";
 
 const SALT_ROUNDS = 10;
 export const salt = bcrypt.genSaltSync(SALT_ROUNDS);
@@ -10,6 +10,7 @@ export interface IUser {
     id: number;
     email: string;
     password: string;
+    balance: number;
     role: UserRoles;
 }
 
@@ -28,6 +29,10 @@ const User: sequelize.Model<IUser, {}> = databaseInstance.define<IUser, {}>(
         },
         password: {
             type: sequelize.STRING,
+            allowNull: false,
+        },
+        balance: {
+            type: sequelize.INTEGER,
             allowNull: false,
         },
         role: {

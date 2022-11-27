@@ -38,6 +38,7 @@ export const add = (req: Request, res: Response) => {
         email: req.body.email,
         password: req.body.password,
         role: req.body.role,
+        balance: 0,
     })
         .then((user: IUser) => {
             res.json({

@@ -1,6 +1,6 @@
 import { databaseInstance } from "../config/db";
 import sequelize from "sequelize";
-import { UserRoles } from "../types/user-roles";
+import { UserRoles } from "../types/enums";
 import { User, IUser } from "./user";
 import dotenv from "dotenv";
 dotenv.config();

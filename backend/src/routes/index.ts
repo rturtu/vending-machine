@@ -3,6 +3,7 @@ import { readAll, logIn } from "../controllers/user";
 import userRoutes from "./user";
 import sessionRoutes from "./session";
 import productRoutes from "./product";
+import purchaseRoutes from "./purchase";
 
 export default class MainRouter {
     router: Router;
@@ -17,5 +18,6 @@ export default class MainRouter {
         userRoutes(this.router);
         sessionRoutes(this.router);
         productRoutes(this.router);
+        purchaseRoutes(this.router);
     }
 }

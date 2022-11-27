@@ -3,7 +3,7 @@ import productController from "../controllers/product";
 import productMiddleware from "../middlewares/product";
 import userMiddleware from "../middlewares/user";
 import sessionMiddleware from "../middlewares/session";
-import { UserRoles } from "../types/user-roles";
+import { UserRoles } from "../types/enums";
 
 const productRoutes = (router: Router) => {
     router.post(
