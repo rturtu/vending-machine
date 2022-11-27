@@ -21,6 +21,25 @@ export const generateJWT = (
         });
 };
 
+export const deleteSession = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.session) return next("Session is not set in request");
+    console.log("delete session ", req.session.id);
+    Session.destroy({
+        where: {
+            id: req.session.id,
+        },
+    })
+        .then(() => {
+            res.status(200).send("Signed out successfully");
+        })
+        .catch((err: any) => next(err));
+};
+
 export default {
     generateJWT,
+    deleteSession,
 };

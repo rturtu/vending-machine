@@ -10,13 +10,10 @@ export default class MainRouter {
         this.router = Router({ mergeParams: true });
 
         this.router.get("/", (req, res) => {
-            res.status(200).send("Hello world!");
+            res.status(200).send("API is running");
         });
 
         userRoutes(this.router);
         sessionRoutes(this.router);
-
-        this.router.get("/users", readAll);
-        this.router.post("/login", logIn);
     }
 }
