@@ -1,10 +1,12 @@
 import React from "react";
-import styled from "styled-components";
-
-const AppContainer = styled.div``;
+import Routes from "./routes";
 
 const App = () => {
-    return <AppContainer></AppContainer>;
+    return (
+        <div>
+            <Routes />
+        </div>
+    );
 };
 
 export default App;
