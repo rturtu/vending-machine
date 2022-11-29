@@ -86,7 +86,10 @@ export const buy = (req: Request, res: Response, next: NextFunction) => {
                         }
                     )
                         .then(() => {
-                            res.status(200).send({ balance: newBalance });
+                            res.status(200).send({
+                                balance: newBalance,
+                                amount: newAmount,
+                            });
                         })
                         .catch((err: any) => {
                             return next(err);
