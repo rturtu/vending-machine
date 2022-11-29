@@ -8,6 +8,7 @@ const sessionRoutes = (router: Router) => {
     router.post(
         "/token",
         userMiddleware.authenticate,
+        sessionMiddleware.countActiveSessions,
         sessionController.generateJWT
     );
 

@@ -28,6 +28,25 @@ export const jwtAuthentication = (
         .catch((err: any) => res.json(err));
 };
 
+export const countActiveSessions = (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    if (!req.user) return next("User is not set in request");
+    Session.findAndCountAll({
+        where: {
+            UserId: req.user.id,
+        },
+        offset: 0,
+        limit: 0,
+    }).then((result: { count: number }) => {
+        req.sessionCount = result.count;
+        next();
+    });
+};
+
 export default {
     jwtAuthentication,
+    countActiveSessions,
 };

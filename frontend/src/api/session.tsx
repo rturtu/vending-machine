@@ -1,5 +1,6 @@
 import axiosInstance from "./axios-instance";
 import axios, { AxiosResponse } from "axios";
+import { toast } from "react-toastify";
 
 interface ISignIn {
     email: string;
@@ -11,6 +12,12 @@ export const signin = (data: ISignIn) => {
         url: "/token",
         data,
     }).then((response: AxiosResponse) => {
+        if (response.data.sessionCount > 0) {
+            toast(
+                `There are ${response.data.sessionCount} other active sessions`,
+                { type: "error" }
+            );
+        }
         return response.data;
     });
 };

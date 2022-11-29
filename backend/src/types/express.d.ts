@@ -12,6 +12,7 @@ declare global {
             session?: ISession;
             product?: IProduct;
             productSearch?: IProductSearch;
+            sessionCount?: number;
         }
     }
 }

@@ -9,10 +9,13 @@ import { deposit, buy } from "../api/purchase";
 import { setBalance } from "../redux/session";
 import Product from "../components/product";
 import { editProduct } from "../redux/products";
+import { signout } from "../api/session";
+import { deleteSession } from "../redux/session";
 
 const mapDispatchToProps = {
     setBalance,
     editProduct,
+    deleteSession,
 };
 type dispatchType = typeof mapDispatchToProps;
 
@@ -25,7 +28,7 @@ const mapStateToProps = (state: RootState) => ({
 interface Props extends ReturnType<typeof mapStateToProps>, dispatchType {}
 
 const VendingMachine = (props: Props) => {
-    const { balance, setBalance, token, editProduct } = props;
+    const { balance, setBalance, token, editProduct, deleteSession } = props;
     const [buyProduct, setBuyProduct] = useState<IProduct | undefined>(
         undefined
     );
@@ -52,6 +55,12 @@ const VendingMachine = (props: Props) => {
         );
     };
 
+    const handleSignOut = () => {
+        signout({ token }).then(() => {
+            deleteSession();
+        });
+    };
+
     return (
         <Container>
             <div style={{ flex: 2, position: "relative" }}>
@@ -76,6 +85,7 @@ const VendingMachine = (props: Props) => {
                     top: 0,
                 }}
             >
+                <Button onClick={handleSignOut}>Log out</Button>
                 <h3>Balance: ${balance}</h3>
                 <h3>Add balance</h3>
                 <div>
