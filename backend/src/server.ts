@@ -14,5 +14,10 @@ export default class Server {
         this.expressInstance.use(bodyParser.json());
 
         this.expressInstance.use(new Router().router);
+        this.expressInstance.use((err: any, req: any, res: any, next: any) => {
+            res.status(500).json({
+                message: err,
+            });
+        });
     }
 }

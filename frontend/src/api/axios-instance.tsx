@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
     baseURL: "http://localhost:8080/",
@@ -8,5 +9,13 @@ const axiosInstance = axios.create({
         Authorization: `${localStorage.getItem("token") || ""}`, // initial state
     },
 });
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        const message = error.response.data.message;
+        toast(message, { type: "error" });
+    }
+);
 
 export default axiosInstance;

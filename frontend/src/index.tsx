@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import rootStore from "./redux/root-store";
 import { Provider } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
@@ -13,6 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <>
         <CssBaseline />
+        <ToastContainer />
         <Provider store={rootStore}>
             <App />
         </Provider>
