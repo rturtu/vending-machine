@@ -6,4 +6,5 @@ export interface IProductSearch {
     priceMax: number;
     amountMin: number;
     amountMax: number;
+    sellerId: number;
 }

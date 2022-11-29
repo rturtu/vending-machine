@@ -14,7 +14,12 @@ export const generateJWT = (
     })
         .then((session: ISession) => {
             console.log("created session", session);
-            res.status(200).send(session.jwt);
+            res.status(200).json({
+                token: session.jwt,
+                role: req.user?.role || "", // type guard fails
+                userId: req.user?.id || 0,
+                balance: req.user?.balance || 0,
+            });
         })
         .catch((err: any) => {
             res.json(err);

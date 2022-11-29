@@ -38,7 +38,7 @@ export const update = (req: Request, res: Response, next: NextFunction) => {
             const [count, products] = affectedRows;
             if (count === 0) return next("Something went wrong");
             res.status(200).json({
-                id: req.params.id,
+                id: req.product?.id || 0,
                 price: req.body.price,
                 amount: req.body.amount,
                 name: req.body.name,
@@ -78,11 +78,19 @@ export const getCollection = (
     console.log("controller.product.getCollection");
     if (!req.productSearch) return next("ProdutSearch is not set in request");
     console.log(req.productSearch);
+    let sellerFilter = {};
+    if (req.productSearch.sellerId)
+        sellerFilter = {
+            UserId: {
+                [Op.eq]: req.productSearch.sellerId,
+            },
+        };
     Product.findAndCountAll({
         where: {
             name: {
                 [Op.like]: `%${req.productSearch.name}%`,
             },
+            ...sellerFilter,
             amount: {
                 [Op.between]: [
                     req.productSearch.amountMin,

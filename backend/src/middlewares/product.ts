@@ -84,6 +84,7 @@ export const validateSearch = (
         skip: <number>normalizeSearchParam(Number(req.query.skip), 0, 0),
         take: <number>normalizeSearchParam(Number(req.query.take), 20, 0, 100),
         name: <string>normalizeSearchParam(req.query.name, ""),
+        sellerId: <number>normalizeSearchParam(Number(req.query.sellerId), 0),
         priceMin: <number>(
             normalizeSearchParam(Number(req.query.priceMin), 0, 0)
         ),
