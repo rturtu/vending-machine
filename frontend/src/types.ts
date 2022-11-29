@@ -13,4 +13,6 @@ export const enum UserRoles {
 export interface ProductSearch {
     name?: string;
     sellerId?: number;
+    skip?: number;
+    take?: number;
 }

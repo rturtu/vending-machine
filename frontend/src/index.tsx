@@ -5,12 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import rootStore from "./redux/root-store";
 import { Provider } from "react-redux";
+import CssBaseline from "@mui/material/CssBaseline";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement
 );
 root.render(
     <>
+        <CssBaseline />
         <Provider store={rootStore}>
             <App />
         </Provider>

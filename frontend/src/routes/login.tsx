@@ -30,7 +30,12 @@ const Login = (props: Props) => {
 
     const handleSignIn = () => {
         signin({ email, password }).then(
-            (session: { role: UserRoles; token: string }) => {
+            (session: {
+                role: UserRoles;
+                token: string;
+                userId: number;
+                balance: number;
+            }) => {
                 setSession(session);
                 if (session.role === UserRoles.Buyer) {
                     navigate("/vending-machine");

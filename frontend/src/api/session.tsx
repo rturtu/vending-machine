@@ -11,18 +11,19 @@ export const signin = (data: ISignIn) => {
         url: "/token",
         data,
     }).then((response: AxiosResponse) => {
-        localStorage.setItem("token", response.data.token);
-        axiosInstance.defaults.headers["Authorization"] = response.data.token;
         return response.data;
     });
 };
 
-export const signout = () => {
+interface ISignOut {
+    token: string;
+}
+export const signout = (data: ISignOut) => {
     return axiosInstance({
         method: "DELETE",
         url: "/token",
-    }).then(() => {
-        localStorage.removeItem("token");
-        axiosInstance.defaults.headers["Authorization"] = "";
-    });
+        headers: {
+            authorization: data.token,
+        },
+    }).then(() => {});
 };

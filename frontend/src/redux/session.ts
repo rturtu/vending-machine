@@ -6,6 +6,8 @@ import { persistReducer } from "redux-persist";
 interface ISessionState {
     token: string;
     role?: UserRoles;
+    userId?: number;
+    balance?: number;
 }
 
 const initialState: ISessionState = {
@@ -18,22 +20,30 @@ export const sessionSlice = createSlice({
     reducers: {
         setSession: (
             state,
-            action: PayloadAction<{ token: string; role: UserRoles }>
+            action: PayloadAction<{
+                token: string;
+                role: UserRoles;
+                userId: number;
+                balance: number;
+            }>
         ) => {
-            return {
-                token: action.payload.token,
-                role: action.payload.role,
-            };
+            return action.payload;
         },
         deleteSession: (state) => {
             return {
                 token: "",
             };
         },
+        setBalance: (state, action: PayloadAction<{ balance: number }>) => {
+            return {
+                ...state,
+                balance: action.payload.balance,
+            };
+        },
     },
 });
 
-export const { setSession, deleteSession } = sessionSlice.actions;
+export const { setSession, deleteSession, setBalance } = sessionSlice.actions;
 const persistConfig = {
     key: "session",
     storage,
