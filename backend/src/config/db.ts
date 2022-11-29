@@ -17,13 +17,17 @@ export default class Database {
         this.host = process.env.DB_HOST || "localhost";
         this.port = Number(process.env.DB_PORT) || 3306;
 
-        this.database = new sequelize(this.db, this.user, this.password, {
-            host: this.host,
-            dialect: "mysql",
-            port: this.port,
-            logging: false,
-            operatorsAliases: false,
-        });
+        if (process.env.NODE_ENV === "test") {
+            this.database = new sequelize("sqlite:memory:");
+        } else {
+            this.database = new sequelize(this.db, this.user, this.password, {
+                host: this.host,
+                dialect: "mysql",
+                port: this.port,
+                logging: false,
+                operatorsAliases: false,
+            });
+        }
 
         this.database
             .authenticate()
@@ -35,7 +39,7 @@ export default class Database {
             });
 
         this.database.sync({
-            // force: true,
+            force: process.env.NODE_ENV === "test",
         });
     }
 }

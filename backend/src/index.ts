@@ -15,6 +15,8 @@ server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
+module.exports = server;
+
 // Port Normalization
 function normalizePort(val: number | string): number | string | boolean {
     const port: number = typeof val === "string" ? parseInt(val, 10) : val;

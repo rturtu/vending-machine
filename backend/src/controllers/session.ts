@@ -19,6 +19,7 @@ export const generateJWT = (
                 role: req.user?.role || "", // type guard fails
                 userId: req.user?.id || 0,
                 balance: req.user?.balance || 0,
+                sessionCount: req.sessionCount,
             });
         })
         .catch((err: any) => {
