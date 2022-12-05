@@ -227,11 +227,12 @@ describe("Test create user", () => {
                 productId: firstProductId,
                 amount: 10,
             });
-        totalBalance = totalBalance - 50;
+        totalBalance = 0;
         console.log(res.body);
         expect(res.statusCode).toBe(200);
-        expect(res.body.balance).toBe(totalBalance);
+        expect(res.body.balance).toBe(0);
         expect(res.body.amount).toBe(0);
+        expect(res.body.change).toStrictEqual([1, 1, 1, 0, 1]);
     });
 
     it("PUT /product should update second product", async () => {
