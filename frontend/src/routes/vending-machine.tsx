@@ -32,6 +32,7 @@ const VendingMachine = (props: Props) => {
     const [buyProduct, setBuyProduct] = useState<IProduct | undefined>(
         undefined
     );
+    const [change, setChange] = useState<number[]>([]);
     const [newCoin, setNewCoin] = useState<number>(0);
     const [purchaseAmount, setPurchaseAmount] = useState<number>(0);
 
@@ -46,8 +47,13 @@ const VendingMachine = (props: Props) => {
     const handleBuy = () => {
         if (!buyProduct) return;
         buy({ token, productId: buyProduct.id, amount: purchaseAmount }).then(
-            (response: { balance: number; amount: number }) => {
+            (response: {
+                balance: number;
+                amount: number;
+                change: number[];
+            }) => {
                 setBalance({ balance: response.balance });
+                setChange(response.change);
                 const newProduct = { ...buyProduct, amount: response.amount };
                 editProduct({ product: newProduct });
                 setBuyProduct(newProduct);
@@ -87,6 +93,13 @@ const VendingMachine = (props: Props) => {
             >
                 <Button onClick={handleSignOut}>Log out</Button>
                 <h3>Balance: ${balance}</h3>
+                {!!change.length && (
+                    <h3>
+                        Change: 5({change[0]}) 10({change[1]}) 20({change[2]})
+                        50(
+                        {change[3]}) 100({change[4]}){" "}
+                    </h3>
+                )}
                 <h3>Add balance</h3>
                 <div>
                     <TextField

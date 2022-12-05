@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { User, IUser } from "../models/user";
 import { Product, IProduct } from "../models/product";
 import { databaseInstance } from "../config/db";
+import { computeChangeArray } from "../utils";
 
 export const deposit = (req: Request, res: Response, next: NextFunction) => {
     console.log("controller.purchase.deposit");
@@ -56,13 +57,14 @@ export const buy = (req: Request, res: Response, next: NextFunction) => {
     console.log("controller.purchase.buy");
     if (!req.user) return next("User is not set in request");
     if (!req.product) return next("Product is not set in request");
-    const newBalance = req.user.balance - req.body.amount * req.product.price;
+    const changeAmount = req.user.balance - req.body.amount * req.product.price;
+    const changeArray = computeChangeArray(changeAmount);
     const newAmount = req.product.amount - req.body.amount;
     try {
         databaseInstance.transaction((t: any) => {
             return User.update(
                 {
-                    balance: newBalance,
+                    balance: 0,
                 },
                 {
                     where: {
@@ -87,8 +89,9 @@ export const buy = (req: Request, res: Response, next: NextFunction) => {
                     )
                         .then(() => {
                             res.status(200).send({
-                                balance: newBalance,
+                                balance: 0,
                                 amount: newAmount,
+                                change: changeArray,
                             });
                         })
                         .catch((err: any) => {
