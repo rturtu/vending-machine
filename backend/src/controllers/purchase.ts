@@ -34,6 +34,7 @@ export const resetBalance = (
 ) => {
     console.log("controller.purchase.resetBalance");
     if (!req.user) return next("User is not set in request");
+    const changeArray = computeChangeArray(req.user.balance);
     User.update(
         {
             balance: 0,
@@ -48,6 +49,7 @@ export const resetBalance = (
         .then(() => {
             res.status(200).json({
                 balance: 0,
+                change: changeArray,
             });
         })
         .catch((err: any) => next(err));
